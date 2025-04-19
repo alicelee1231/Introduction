@@ -1,0 +1,94 @@
+.game-container {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #ffd1dc, #ffb6c1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="2" fill="rgba(255,255,255,0.3)"/></svg>');
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.game-content {
+  max-width: 800px;
+  width: 90%;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(255, 182, 193, 0.3);
+}
+
+.alice-container {
+  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.alice-image {
+  width: 200px;
+  height: auto;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  animation: floatAlice 3s ease-in-out infinite;
+}
+
+@keyframes floatAlice {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 30px;
+  color: #ff69b4;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: "Comic Sans MS", cursive;
+}
+
+h2 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  color: #ff1493;
+  font-family: "Comic Sans MS", cursive;
+}
+
+.trait-container {
+  margin-top: 40px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(255, 182, 193, 0.5);
+}
+
+.error-message {
+  color: #ff1493;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  display: inline-block;
+  box-shadow: 0 0 10px rgba(255, 20, 147, 0.3);
+}

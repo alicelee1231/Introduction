@@ -1,0 +1,49 @@
+.choice-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.choice-container h2 {
+  color: #fff;
+  font-size: 2rem;
+  margin: 0;
+  text-align: center;
+}
+
+.traits-grid {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.trait-button {
+  padding: 1.5rem 3rem;
+  border: none;
+  border-radius: 12px;
+  background: #4caf50;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 200px;
+  text-align: center;
+}
+
+.trait-button:hover {
+  background: #45a049;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(76, 175, 80, 0.4);
+}
+
+.trait-button:active {
+  transform: translateY(-2px);
+}

@@ -1,0 +1,52 @@
+.character-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.flower {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 20px;
+}
+
+.flower-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: #ffd700;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  z-index: 2;
+}
+
+.petal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  height: 120px;
+  background: #ff69b4;
+  border-radius: 50% 50% 0 50%;
+  transform-origin: 0 0;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.petal.filled {
+  background: #ff1493;
+  opacity: 1;
+  box-shadow: 0 0 10px rgba(255, 20, 147, 0.5);
+}
+
+.progress-text {
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #333;
+  font-weight: bold;
+}
