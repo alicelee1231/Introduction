@@ -17,7 +17,7 @@ const Home: React.FC = () => {
   return (
     <div className="container">
       <div className={`character alice ${isTransitioning ? "fade-out" : ""}`}>
-        <img src={process.env.PUBLIC_URL + "/alice.png"} alt="Alice" />
+        <img src={`${process.env.PUBLIC_URL}/alice.png`} alt="Alice" />
         <div className="label">Alice</div>
       </div>
 
@@ -34,7 +34,7 @@ const Home: React.FC = () => {
       </div>
 
       <div className={`character monster ${isTransitioning ? "fade-out" : ""}`}>
-        <img src={process.env.PUBLIC_URL + "/others.png"} alt="Others" />
+        <img src={`${process.env.PUBLIC_URL}/others.png`} alt="Others" />
         <div className="label">Others</div>
       </div>
     </div>
