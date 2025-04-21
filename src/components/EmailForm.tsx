@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { sendEmail } from "../services/emailService";
 import "./EmailForm.css";
 
 interface EmailFormProps {
@@ -138,18 +139,14 @@ const EmailForm: React.FC<EmailFormProps> = ({ onPick, onDrop, message }) => {
     try {
       if (action === "pick") {
         createHeartShower();
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/pick`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            action,
-            message: "User liked my introduction! 🎉",
-          }),
+        const emailResult = await sendEmail({
+          to: "saemmilee1231@gmail.com",
+          subject: "New Introduction Game Response",
+          text: "Someone liked your introduction! 🎉",
+          html: "<h1>Someone liked your introduction! 🎉</h1>",
         });
 
-        if (!response.ok) {
+        if (!emailResult.success) {
           throw new Error("Failed to send email");
         }
 
@@ -165,12 +162,30 @@ const EmailForm: React.FC<EmailFormProps> = ({ onPick, onDrop, message }) => {
     }
   };
 
-  const handleSubmitFeedback = (e: React.FormEvent) => {
+  const handleSubmitFeedback = async (e: React.FormEvent) => {
     e.preventDefault();
-    createClover();
-    onDrop(feedback);
-    setShowFeedback(false);
-    setFeedback("");
+    try {
+      createClover();
+      const emailResult = await sendEmail({
+        to: "saemmilee1231@gmail.com",
+        subject: "Introduction Game Feedback",
+        text: `Feedback: ${feedback}`,
+        html: `<h1>Feedback Received</h1><p>${feedback}</p>`,
+      });
+
+      if (!emailResult.success) {
+        throw new Error("Failed to send feedback");
+      }
+
+      onDrop(feedback);
+      setShowFeedback(false);
+      setFeedback("");
+    } catch (error) {
+      alert(
+        "Sorry, there was an error sending your feedback. Please try again later."
+      );
+      console.error("Error:", error);
+    }
   };
 
   return (

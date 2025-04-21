@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Game from "./components/Game";
 import Home from "./components/Home";
 import "./App.css";
