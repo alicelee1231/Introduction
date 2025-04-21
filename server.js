@@ -3,12 +3,52 @@ const cors = require("cors");
 const { Resend } = require("resend");
 require("dotenv").config();
 
-const app = express();
-const port = 8080;
+// 서버 시작 시간 기록
+const startTime = new Date();
+console.log(`Server start attempt at: ${startTime}`);
 
+const app = express();
+const port = 3002;
+
+// 기본 라우트 추가
+app.get("/", (req, res) => {
+  res.json({ status: "ok", uptime: process.uptime() });
+});
+
+console.log("Express app created, setting up middleware...");
+
+// 에러 핸들링 미들웨어
+app.use((err, req, res, next) => {
+  console.error("Unhandled error:", err);
+  res.status(500).json({ error: "Internal server error" });
+});
+
+// 프로세스 종료 핸들러
+const gracefulShutdown = () => {
+  console.log("Received shutdown signal. Cleaning up...");
+  process.exit(0);
+};
+
+process.on("SIGTERM", gracefulShutdown);
+process.on("SIGINT", gracefulShutdown);
+
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
+  // 서버를 종료하지 않고 계속 실행
+  console.log("Continuing execution after uncaught exception");
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection at:", promise, "reason:", reason);
+  // 서버를 종료하지 않고 계속 실행
+  console.log("Continuing execution after unhandled rejection");
+});
+
+console.log("Setting up CORS and JSON middleware...");
 app.use(cors());
 app.use(express.json());
 
+console.log("Initializing Resend client...");
 const resend = new Resend(process.env.REACT_APP_RESEND_API_KEY);
 
 app.post("/api/send-email", async (req, res) => {
@@ -45,6 +85,23 @@ app.post("/api/send-email", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
+console.log("Starting server...");
+// 서버 시작
+const server = app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+  console.log(`Server started at: ${new Date()}`);
+  console.log(`Uptime: ${process.uptime()} seconds`);
 });
+
+// 서버 에러 핸들링
+server.on("error", (error) => {
+  console.error("Server error:", error);
+  console.log("Continuing execution after server error");
+});
+
+// 주기적인 상태 로깅
+setInterval(() => {
+  console.log(`Server status: running, uptime: ${process.uptime()} seconds`);
+}, 30000); // 30초마다 상태 로깅
+
+console.log("Server initialization complete");
