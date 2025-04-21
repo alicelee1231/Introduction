@@ -16,29 +16,30 @@ interface EmailOptions {
 
 export const sendEmail = async ({ to, subject, text, html }: EmailOptions) => {
   try {
-    const response = await fetch("http://localhost:8080/api/send-email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        to,
-        subject,
-        text,
-        html: html || text,
-        from: process.env.REACT_APP_SENDER_EMAIL,
-      }),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || "Failed to send email");
+    if (!process.env.REACT_APP_RESEND_API_KEY) {
+      throw new Error("Resend API key is not configured");
     }
 
-    const data = await response.json();
+    if (!process.env.REACT_APP_SENDER_EMAIL) {
+      throw new Error("Sender email is not configured");
+    }
+
+    const { data, error } = await resend.emails.send({
+      from: process.env.REACT_APP_SENDER_EMAIL,
+      to,
+      subject,
+      text,
+      html: html || text,
+    });
+
+    if (error) {
+      console.error("Resend API Error:", error);
+      return { success: false, error };
+    }
+
     return { success: true, data };
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.error("Error in sendEmail:", error);
     return {
       success: false,
       error: error instanceof Error ? error.message : "Unknown error occurred",
