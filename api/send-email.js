@@ -1,25 +1,31 @@
-const express = require("express");
-const cors = require("cors");
 const { Resend } = require("resend");
-require("dotenv").config();
-
-const app = express();
-const port = 3002;
-
-console.log(`📢 Server start attempt at: ${new Date()}`);
-
-app.use(cors());
-app.use(express.json());
-
-console.log("✅ Middleware setup complete");
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-app.get("/", (req, res) => {
-  res.json({ status: "ok", uptime: process.uptime() });
-});
+module.exports = async (req, res) => {
+  // CORS 설정
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+  );
 
-app.post("/api/send-email", async (req, res) => {
+  // OPTIONS 요청 처리
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
+
+  // POST 요청만 허용
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+
   try {
     const { to, subject, text, html } = req.body;
 
@@ -52,18 +58,4 @@ app.post("/api/send-email", async (req, res) => {
       error: error.message || "Internal server error",
     });
   }
-});
-
-// graceful shutdown (optional but good practice)
-process.on("SIGTERM", () => {
-  console.log("🛑 Received SIGTERM, shutting down...");
-  process.exit(0);
-});
-process.on("SIGINT", () => {
-  console.log("🛑 Received SIGINT, shutting down...");
-  process.exit(0);
-});
-
-app.listen(port, () => {
-  console.log(`🚀 Server is running on http://localhost:${port}`);
-});
+};

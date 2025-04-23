@@ -8,9 +8,14 @@ interface EmailOptions {
   html?: string;
 }
 
+const API_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://introduction-game.netlify.app/.netlify/functions"
+    : "http://localhost:9999/.netlify/functions";
+
 export const sendEmail = async ({ to, subject, text, html }: EmailOptions) => {
   try {
-    const response = await axios.post("http://localhost:3002/api/send-email", {
+    const response = await axios.post(`${API_URL}/send-email`, {
       to,
       subject,
       text,
