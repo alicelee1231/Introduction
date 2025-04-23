@@ -9,8 +9,6 @@ import "./Game.css";
 const Game: React.FC = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showEmailForm, setShowEmailForm] = useState(false);
-  const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
-  const [message, setMessage] = useState("");
   const [showEndPage, setShowEndPage] = useState(false);
   const [totalScore, setTotalScore] = useState(0);
 
@@ -58,7 +56,6 @@ const Game: React.FC = () => {
   ];
 
   const handleChoice = (trait: string, index: number) => {
-    setSelectedTraits([...selectedTraits, trait]);
     setTotalScore(totalScore + questions[currentQuestion].scores[index]);
 
     if (currentQuestion < questions.length - 1) {
@@ -69,13 +66,11 @@ const Game: React.FC = () => {
   };
 
   const handlePick = () => {
-    setMessage("Thank you for your interest! 🎉");
     setShowEmailForm(false);
     setShowEndPage(true);
   };
 
   const handleDrop = () => {
-    setMessage("Thank you for your feedback! 💪");
     setShowEmailForm(false);
     setShowEndPage(true);
   };
@@ -119,14 +114,9 @@ const Game: React.FC = () => {
                 <div className="score-display">{averageScore}</div>
               </div>
             </div>
-            <EmailForm
-              onPick={handlePick}
-              onDrop={handleDrop}
-              message={message}
-            />
+            <EmailForm onPick={handlePick} onDrop={handleDrop} />
           </>
         )}
-        {message && <div className="error-message">{message}</div>}
         <Angel size={80} />
       </div>
     </div>

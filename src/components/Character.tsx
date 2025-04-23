@@ -28,7 +28,6 @@ const Character: React.FC<CharacterProps> = ({ progress = 0 }) => {
           />
         ))}
       </div>
-      <div className="progress-text"></div>
     </div>
   );
 };

@@ -5,10 +5,9 @@ import "./EmailForm.css";
 interface EmailFormProps {
   onPick: () => void;
   onDrop: (feedback: string) => void;
-  message: string;
 }
 
-const EmailForm: React.FC<EmailFormProps> = ({ onPick, onDrop, message }) => {
+const EmailForm: React.FC<EmailFormProps> = ({ onPick, onDrop }) => {
   const [showFeedback, setShowFeedback] = useState(false);
   const [feedback, setFeedback] = useState("");
   const [thumbsDown, setThumbsDown] = useState<
