@@ -141,6 +141,12 @@ const EmailForm: React.FC<EmailFormProps> = ({ onPick, onDrop }) => {
         const companyName = prompt("Please enter your company name:");
         if (!companyName) return;
 
+        console.log("📨 EMAIL TO SEND:", {
+          to: process.env.REACT_APP_RECIPIENT_EMAIL,
+          subject: "New Introduction Game Response",
+          text: `${companyName} liked your introduction! 🎉`,
+        });
+
         const emailResult = await sendEmail({
           to: process.env.REACT_APP_RECIPIENT_EMAIL!,
           subject: "New Introduction Game Response",
