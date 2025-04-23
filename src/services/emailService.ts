@@ -10,7 +10,7 @@ interface EmailOptions {
 
 const API_URL =
   process.env.NODE_ENV === "production"
-    ? "https://introduction-game.netlify.app/.netlify/functions"
+    ? "https://dashing-peony-3eff43.netlify.app/.netlify/functions"
     : "http://localhost:9999/.netlify/functions";
 
 export const sendEmail = async ({ to, subject, text, html }: EmailOptions) => {
