@@ -139,11 +139,14 @@ const EmailForm: React.FC<EmailFormProps> = ({ onPick, onDrop, message }) => {
     try {
       if (action === "pick") {
         createHeartShower();
+        const companyName = prompt("Please enter your company name:");
+        if (!companyName) return;
+
         const emailResult = await sendEmail({
-          to: "saemmilee1231@gmail.com",
+          to: process.env.REACT_APP_RECIPIENT_EMAIL!,
           subject: "New Introduction Game Response",
-          text: "Someone liked your introduction! 🎉",
-          html: "<h1>Someone liked your introduction! 🎉</h1>",
+          text: `${companyName} liked your introduction! 🎉`,
+          html: `<h1>${companyName} liked your introduction! 🎉</h1>`,
         });
 
         if (!emailResult.success) {
@@ -167,7 +170,7 @@ const EmailForm: React.FC<EmailFormProps> = ({ onPick, onDrop, message }) => {
     try {
       createClover();
       const emailResult = await sendEmail({
-        to: "saemmilee1231@gmail.com",
+        to: process.env.REACT_APP_RECIPIENT_EMAIL!,
         subject: "Introduction Game Feedback",
         text: `Feedback: ${feedback}`,
         html: `<h1>Feedback Received</h1><p>${feedback}</p>`,
@@ -244,7 +247,7 @@ const EmailForm: React.FC<EmailFormProps> = ({ onPick, onDrop, message }) => {
           <textarea
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
-            placeholder="Please share why you chose to drop and how I could improve..."
+            placeholder="Please share why you chose to drop and how I could improve...and your company name too"
             className="feedback-textarea"
             required
           />

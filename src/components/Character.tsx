@@ -6,7 +6,7 @@ interface CharacterProps {
 }
 
 const Character: React.FC<CharacterProps> = ({ progress = 0 }) => {
-  const petals = 5; // Number of petals in the flower
+  const petals = 8; // Number of petals in the flower
   const petalProgress = progress / (100 / petals); // Progress per petal
 
   return (
@@ -28,7 +28,7 @@ const Character: React.FC<CharacterProps> = ({ progress = 0 }) => {
           />
         ))}
       </div>
-      <div className="progress-text">{progress}% Complete</div>
+      <div className="progress-text"></div>
     </div>
   );
 };
